@@ -8,5 +8,8 @@
             "email": "vdmkbu@ya.ru"
         }
     ],
-    "require": {}
+    "require": {},
+    "autoload": {
+        "Webmaster\\": "src/"
+    }
 }

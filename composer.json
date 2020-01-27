@@ -8,8 +8,15 @@
             "email": "vdmkbu@ya.ru"
         }
     ],
-    "require": {},
+    "require": {
+        "zendframework/zend-diactoros": "^2.2",
+        "php-http/message": "^1.8",
+        "psr/http-client": "^1.0"
+    },
     "autoload": {
-        "Webmaster\\": "src/"
+        "psr-4": {
+            "Yandex\\Webmaster\\": "src/"
+        }
+
     }
 }

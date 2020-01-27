@@ -1,0 +1,12 @@
+{
+    "name": "vdmkbu/webmaster",
+    "description": "webmaster API SDK",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Vadim Korostelev",
+            "email": "vdmkbu@ya.ru"
+        }
+    ],
+    "require": {}
+}

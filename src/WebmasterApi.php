@@ -39,8 +39,30 @@ class WebmasterApi
         $request = Request::init($headers)->get($uri);
         $response = $this->client->sendRequest($request);
 
-        $data = json_decode($response->getBody(), true);
+        $data = json_decode($response->getBody());
 
-        return $data['user_id'];
+        return $data->user_id;
+    }
+
+    public function getHosts($user_id)
+    {
+        $uri = self::API_URL . "/user/{$user_id}/hosts/";
+        $headers = $this->getHttpHeaders();
+
+        $request = Request::init($headers)->get($uri);
+        $response = $this->client->sendRequest($request);
+
+        $data = json_decode($response->getBody());
+
+        return $data;
+    }
+
+    public function getHostId($hosts_data, $name)
+    {
+
+        foreach($hosts_data->hosts as $key => $object) {
+            if(!strpos($object->host_id, $name) === false)
+                return $object->host_id;
+        }
     }
 }

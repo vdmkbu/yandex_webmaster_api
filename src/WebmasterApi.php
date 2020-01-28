@@ -65,4 +65,17 @@ class WebmasterApi
                 return $object->host_id;
         }
     }
+
+    public function getOriginalTexts($user_id, $host_id)
+    {
+        $uri = self::API_URL . "/user/{$user_id}/hosts/{$host_id}/original-texts/";
+        $headers = $this->getHttpHeaders();
+
+        $request = Request::init($headers)->get($uri);
+        $response = $this->client->sendRequest($request);
+
+        $data = json_decode($response->getBody());
+
+        return $data->original_texts;
+    }
 }

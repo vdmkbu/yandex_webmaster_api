@@ -78,4 +78,17 @@ class WebmasterApi
 
         return $data->original_texts;
     }
+
+    public function addOriginalText($user_id, $host_id, $content)
+    {
+        $uri = self::API_URL . "/user/{$user_id}/hosts/{$host_id}/original-texts/";
+        $headers = $this->getHttpHeaders();
+
+        $request = Request::init($headers)->post($uri, json_encode(['content' => $content]));
+        $response = $this->client->sendRequest($request);
+
+        $data = json_decode($response->getBody());
+
+        return $data;
+    }
 }

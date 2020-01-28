@@ -1,8 +1,8 @@
 <?php
 namespace Yandex\Webmaster;
 
+use Http\Message\MessageFactory\DiactorosMessageFactory;
 use Psr\Http\Client\ClientInterface;
-use Yandex\Webmaster\Helpers\Request;
 
 class WebmasterApi
 {
@@ -34,10 +34,7 @@ class WebmasterApi
     public function getUserId()
     {
         $uri = self::API_URL . "/user/";
-        $headers = $this->getHttpHeaders();
-
-        $request = Request::init($headers)->get($uri);
-        $response = $this->client->sendRequest($request);
+        $response = $this->get($uri);
 
         $data = json_decode($response->getBody());
 
@@ -47,10 +44,7 @@ class WebmasterApi
     public function getHosts($user_id)
     {
         $uri = self::API_URL . "/user/{$user_id}/hosts/";
-        $headers = $this->getHttpHeaders();
-
-        $request = Request::init($headers)->get($uri);
-        $response = $this->client->sendRequest($request);
+        $response = $this->get($uri);
 
         $data = json_decode($response->getBody());
 
@@ -69,10 +63,7 @@ class WebmasterApi
     public function getOriginalTexts($user_id, $host_id)
     {
         $uri = self::API_URL . "/user/{$user_id}/hosts/{$host_id}/original-texts/";
-        $headers = $this->getHttpHeaders();
-
-        $request = Request::init($headers)->get($uri);
-        $response = $this->client->sendRequest($request);
+        $response = $this->get($uri);
 
         $data = json_decode($response->getBody());
 
@@ -82,13 +73,36 @@ class WebmasterApi
     public function addOriginalText($user_id, $host_id, $content)
     {
         $uri = self::API_URL . "/user/{$user_id}/hosts/{$host_id}/original-texts/";
-        $headers = $this->getHttpHeaders();
-
-        $request = Request::init($headers)->post($uri, json_encode(['content' => $content]));
-        $response = $this->client->sendRequest($request);
+        $response = $this->post($uri, ['content' => $content]);
 
         $data = json_decode($response->getBody());
 
         return $data;
+    }
+
+    protected function get($uri)
+    {
+        $headers = $this->getHttpHeaders();
+        $response = $this
+                        ->client
+                        ->sendRequest(
+                            (new DiactorosMessageFactory())
+                                ->createRequest('GET', $uri, $headers)
+                        );
+
+        return $response;
+    }
+
+    protected function post($uri, array $body)
+    {
+        $headers = $this->getHttpHeaders();
+        $response = $this
+                        ->client
+                        ->sendRequest(
+                            (new DiactorosMessageFactory())
+                                ->createRequest('POST', $uri, $headers, json_encode($body))
+                        );
+
+        return $response;
     }
 }

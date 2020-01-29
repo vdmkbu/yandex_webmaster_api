@@ -1,6 +1,7 @@
 ```php
-<?
-    require 'vendor/autoload.php';
+<?php
+    
+        require 'vendor/autoload.php';
 
 	use Yandex\Webmaster\WebmasterApi;
 	use GuzzleHttp\Client as GuzzleClient;
@@ -27,11 +28,11 @@
     		$content = '<p>article text</p>';
     		$content = html_entity_decode(strip_tags($content));
             
-            $result = $wmApi->addOriginalText($user_id, $host_id, $content);
+                $result = $wmApi->addOriginalText($user_id, $host_id, $content);
             
             	      
         } catch (Exception $e) {
-            		echo $e->getMessage();
+    	    echo $e->getMessage();
         }
 
 ```

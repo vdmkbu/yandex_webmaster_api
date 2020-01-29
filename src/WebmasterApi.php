@@ -83,12 +83,17 @@ class WebmasterApi
     protected function get($uri)
     {
         $headers = $this->getHttpHeaders();
-        $response = $this
-                        ->client
-                        ->sendRequest(
-                            (new DiactorosMessageFactory())
-                                ->createRequest('GET', $uri, $headers)
-                        );
+
+        try {
+            $response = $this
+                            ->client
+                            ->sendRequest(
+                                (new DiactorosMessageFactory())
+                                    ->createRequest('GET', $uri, $headers)
+                            );
+        } catch (\Exception $exception) {
+            throw new \Exception($exception->getMessage());
+        }
 
         return $response;
     }
@@ -96,12 +101,17 @@ class WebmasterApi
     protected function post($uri, array $body)
     {
         $headers = $this->getHttpHeaders();
-        $response = $this
-                        ->client
-                        ->sendRequest(
-                            (new DiactorosMessageFactory())
-                                ->createRequest('POST', $uri, $headers, json_encode($body))
-                        );
+
+        try {
+            $response = $this
+                            ->client
+                            ->sendRequest(
+                                (new DiactorosMessageFactory())
+                                    ->createRequest('POST', $uri, $headers, json_encode($body))
+                            );
+        } catch (\Exception $exception) {
+            throw new \Exception($exception->getMessage());
+        }
 
         return $response;
     }
